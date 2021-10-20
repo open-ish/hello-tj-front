@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/posts/development-world-from-developer-eyes", {data:[{}],fetch:{},mutations:void 0});
