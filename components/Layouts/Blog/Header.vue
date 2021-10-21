@@ -62,7 +62,7 @@ export default Vue.extend({
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Hello TJ',
+      title: 'Hello TJ - beta project',
     }
   },
 })
