@@ -132,16 +132,5 @@ export default Vue.extend({
   display: flex;
   align-items: center;
   justify-content: space-around;
-  //   align-items: flex-start;
-
-  //   &__config {
-  //     width: 100%;
-  //     display: flex;
-  //     flex-direction: column;
-  //   }
-
-  //   &__config--new {
-  //     align-self: center;
-  //   }
 }
 </style>
