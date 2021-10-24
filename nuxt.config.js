@@ -1,4 +1,6 @@
 import colors from 'vuetify/es5/util/colors'
+import axios from 'axios'
+
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -19,14 +21,23 @@ export default {
     exclude: [
       /^\/admin/, // path starts with /admin
     ],
-    routes: ['/posts/development-world-from-developer-eyes'],
+    routes() {
+      return axios.get('http://localhost:8080/posts').then((response) => {
+        return response.data.map((res) => {
+          return {
+            payload: res,
+            route: '/posts/' + res.id,
+          }
+        })
+      })
+    },
   },
   router: {
     base: process.env.NODE_ENV === 'development' ? '' : '/hello-tj-front/',
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: ['@/styles/layouts/blog/font.scss'],
+  css: ['@/styles/layouts/font.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [{ src: '~/plugins/client/html-secure.ts', mode: 'client' }],
@@ -60,7 +71,7 @@ export default {
         dark: {
           primary: colors.teal,
           accent: colors.grey.darken3,
-          secondary: colors.amber.lighten2,
+          secondary: colors.lightBlue.lighten2,
           info: colors.teal.lighten1,
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,

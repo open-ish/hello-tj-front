@@ -1,36 +1,38 @@
 <template>
   <section class="container-page">
-    <header class="header">
-      <h1 class="header--title tj-text-panel">About me ☕</h1>
-      <p>Please, get a coffee and make yourself at home.</p>
-    </header>
-    <div class="content text-justify">
-      <article
-        v-for="content in contents"
-        :key="content.id"
-        class="content--item"
-      >
-        <h2
-          class="content--item-title tj-text-title"
-          :data-testid="content.id + '-title'"
+    <div v-if="contents.length">
+      <header class="header">
+        <h1 class="header--title tj-text-panel">{{ title }}</h1>
+        <p>{{ intro }}</p>
+      </header>
+      <div class="content text-justify">
+        <article
+          v-for="content in contents"
+          :key="content.id"
+          class="content--item"
         >
-          {{ content.title }}
-        </h2>
-        <div
-          v-for="body in content.body"
-          :key="body.text"
-          :data-testid="content.id + '-content'"
-          class="content--item-text"
-        >
-          <component
-            :is="componentName(body.type)"
-            v-if="body.type"
-            :config="body"
+          <h2
+            class="content--item-title tj-text-title"
+            :data-testid="content.id + '-title'"
+          >
+            {{ content.title }}
+          </h2>
+          <div
+            v-for="body in content.body"
+            :key="body.value"
+            :data-testid="content.id + '-content'"
             class="content--item-text"
-          />
-          <p v-else>{{ body.text }}</p>
-        </div>
-      </article>
+          >
+            <component
+              :is="componentName(body.type)"
+              v-if="componentName(body.type) !== 'p'"
+              :config="body"
+              class="content--item-text"
+            />
+            <p v-else>{{ body.value }}</p>
+          </div>
+        </article>
+      </div>
     </div>
   </section>
 </template>
@@ -40,8 +42,12 @@ import Vue from 'vue'
 
 import FriendlyList from '@/components/Layouts/Blog/FriendlyList/FriendlyList.vue'
 import PeriodList from '@/components/Layouts/Blog/PeriodList/PeriodList.vue'
-import { componentTagValidator } from '~/helpers/Blog/helloComponentsValidatior'
-import { contents } from '@/fakeDataBase/about'
+import {
+  componentTagValidator,
+  componentTagValidatorParams,
+} from '@/helpers/Blog/componentsValidatior/componentsValidatior'
+import aboutApi from '@/services/Blog/about/about.service'
+import { combinedVueInstanceWorkAround } from '~/helpers/work-around/combinedVueInstanceWorkAround'
 
 export default Vue.extend({
   name: 'About',
@@ -50,16 +56,20 @@ export default Vue.extend({
     PeriodList,
   },
   layout: 'blog',
-  data() {
+  async asyncData() {
+    const { contents, title, intro } = await aboutApi.index()
+
     return {
       contents,
+      title,
+      intro,
     }
   },
-  head: {
-    title: 'About me -',
+  head() {
+    return { title: combinedVueInstanceWorkAround(this).title + ' -' }
   },
   methods: {
-    componentName(type: number) {
+    componentName(type: componentTagValidatorParams) {
       return componentTagValidator(type)
     },
   },

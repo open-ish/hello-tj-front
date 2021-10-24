@@ -26,17 +26,19 @@
         </h2>
         <div
           v-for="body in content.body"
-          :key="body.text"
+          :key="body.value"
           :data-testid="content.id + '-content'"
           class="content--item-text"
         >
+          <p>{{ body.value }}</p>
+
           <component
             :is="componentName(body.type)"
-            v-if="body.type"
+            v-if="componentName(body.type) !== 'p'"
             :config="body"
             class="content--item-text"
           />
-          <p v-else>{{ body.text }}</p>
+          <p v-else>{{ body.value }}</p>
         </div>
       </article>
     </div>
@@ -48,7 +50,10 @@ import Vue from 'vue'
 
 import KeepReading from '@/components/Layouts/Blog/KeepReading/KeepReading.vue'
 import FindMoreInfoList from '@/components/Layouts/Blog/FindMoreInfoList/FindMoreInfoList.vue'
-import { componentTagValidator } from '@/helpers/Blog/helloComponentsValidatior/helloComponentsValidatior'
+import {
+  componentTagValidator,
+  componentTagValidatorParams,
+} from '@/helpers/Blog/componentsValidatior/componentsValidatior'
 import { contents, keepReadings } from '@/fakeDataBase/hello'
 
 export default Vue.extend({
@@ -65,7 +70,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    componentName(type: number) {
+    componentName(type: componentTagValidatorParams) {
       return componentTagValidator(type)
     },
   },

@@ -44,7 +44,10 @@ import Quotes from '@/components/Layouts/Blog/Quotes/Quotes.vue'
 import Chip from '@/components/AntiCorruption/Chip/Chip.vue'
 import FindMoreInfoList from '@/components/Layouts/Blog/FindMoreInfoList/FindMoreInfoList.vue'
 import ChipGroup from '@/components/AntiCorruption/Chip/ChipGroup.vue'
-import { componentTagValidator } from '~/helpers/Blog/helloComponentsValidatior/helloComponentsValidatior'
+import {
+  componentTagValidator,
+  componentTagValidatorParams,
+} from '@/helpers/Blog/componentsValidatior/componentsValidatior'
 import { combinedVueInstanceWorkAround } from '@/helpers/work-around/combinedVueInstanceWorkAround'
 
 export default Vue.extend({
@@ -167,7 +170,7 @@ export default Vue.extend({
     return { title: combinedVueInstanceWorkAround(this).postTitle() as string }
   },
   methods: {
-    componentName(type: number) {
+    componentName(type: componentTagValidatorParams) {
       return componentTagValidator(type)
     },
     postTitle(): string {

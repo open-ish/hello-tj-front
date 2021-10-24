@@ -15,7 +15,7 @@ import Vue from 'vue'
 
 export default Vue.extend({
   name: 'Admin',
-  layout: 'blog',
+  layout: 'admin',
   data() {
     return {
       mountains: [],

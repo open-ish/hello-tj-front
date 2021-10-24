@@ -1,13 +1,13 @@
 <template>
-  <VBtn rounded v-bind="{ ...$props, ...$attrs }" v-on="$listeners">
+  <VCombobox v-bind="{ ...$props, ...$attrs }" v-on="$listeners">
     <slot />
-  </VBtn>
+  </VCombobox>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 
 export default Vue.extend({
-  name: 'Btn',
+  name: 'Combobox',
 })
 </script>

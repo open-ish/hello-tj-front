@@ -22,7 +22,7 @@ const defaultProperties = () => {
 
 export function testSetup(
   component: VueClass<Vue>,
-  customConfig: ThisTypedMountOptions<Vue>,
+  customConfig?: ThisTypedMountOptions<Vue>,
   shallow = false
 ) {
   return shallow
